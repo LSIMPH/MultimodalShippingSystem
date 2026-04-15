@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Shipments";
+    var showDistanceColumn = Model.Any(item => item.ShipmentType == MultimodalShippingSystem.Models.ShipmentType.Road);
 }
 
 <h1>Shipments</h1>
@@ -16,7 +17,10 @@
             <th>Type</th>
             <th>@Html.DisplayNameFor(model => model.SenderName)</th>
             <th>@Html.DisplayNameFor(model => model.ReceiverName)</th>
-            <th>@Html.DisplayNameFor(model => model.Distance)</th>
+            @if (showDistanceColumn)
+            {
+                <th>@Html.DisplayNameFor(model => model.Distance)</th>
+            }
             <th>@Html.DisplayNameFor(model => model.Weight)</th>
             <th>Calculated Fee</th>
             <th></th>
@@ -36,7 +40,10 @@
         <td>@icon @item.ShipmentType</td>
         <td>@item.SenderName</td>
         <td>@item.ReceiverName</td>
-        <td>@(item.Distance?.ToString("0.##") ?? "N/A")</td>
+        @if (showDistanceColumn)
+        {
+            <td>@(item.ShipmentType == MultimodalShippingSystem.Models.ShipmentType.Road ? item.Distance?.ToString("0.##") : string.Empty)</td>
+        }
         <td>@(item.Weight?.ToString("0.##") ?? "N/A")</td>
         <td>$@item.CalculatedFee.ToString("0.00")</td>
         <td>
