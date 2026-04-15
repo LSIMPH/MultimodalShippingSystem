@@ -1,0 +1,31 @@
+@model MultimodalShippingSystem.Models.ShipmentViewModel
+
+@{
+    ViewData["Title"] = "Delete Shipment";
+}
+
+<h1>Delete Shipment</h1>
+
+<h3>Are you sure you want to delete this shipment?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Shipment Type</dt>
+        <dd class="col-sm-9">@Model.ShipmentType</dd>
+
+        <dt class="col-sm-3">Sender</dt>
+        <dd class="col-sm-9">@Model.SenderName</dd>
+
+        <dt class="col-sm-3">Receiver</dt>
+        <dd class="col-sm-9">@Model.ReceiverName</dd>
+
+        <dt class="col-sm-3">Calculated Fee</dt>
+        <dd class="col-sm-9">$@Model.CalculatedFee.ToString("0.00")</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ShipmentId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

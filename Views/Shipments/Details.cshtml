@@ -1,0 +1,50 @@
+@model MultimodalShippingSystem.Models.ShipmentViewModel
+
+@{
+    ViewData["Title"] = "Shipment Details";
+}
+
+<h1>Shipment Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Shipment Type</dt>
+        <dd class="col-sm-9">@Model.ShipmentType</dd>
+
+        <dt class="col-sm-3">Sender</dt>
+        <dd class="col-sm-9">@Model.SenderName</dd>
+
+        <dt class="col-sm-3">Receiver</dt>
+        <dd class="col-sm-9">@Model.ReceiverName</dd>
+
+        <dt class="col-sm-3">Distance</dt>
+        <dd class="col-sm-9">@(Model.Distance?.ToString("0.##") ?? "N/A") km</dd>
+
+        <dt class="col-sm-3">Weight</dt>
+        <dd class="col-sm-9">@(Model.Weight?.ToString("0.##") ?? "N/A") kg</dd>
+
+        <dt class="col-sm-3">Priority</dt>
+        <dd class="col-sm-9">@(Model.IsPriority ? "Yes" : "No")</dd>
+
+        <dt class="col-sm-3">Calculated Fee</dt>
+        <dd class="col-sm-9">$@Model.CalculatedFee.ToString("0.00")</dd>
+
+        <dt class="col-sm-3">Fee Breakdown</dt>
+        <dd class="col-sm-9">
+            @switch (Model.ShipmentType)
+            {
+                case MultimodalShippingSystem.Models.ShipmentType.Road:
+                    <span>Road Fee = (Distance × 0.50) + (Weight × 0.10)</span>
+                    break;
+                case MultimodalShippingSystem.Models.ShipmentType.Air:
+                    <span>Air Fee = (Weight × 1.00) + 500 @(Model.IsPriority ? "+ 250 Priority" : string.Empty)</span>
+                    break;
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ShipmentId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

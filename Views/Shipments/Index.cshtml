@@ -1,0 +1,50 @@
+@model IEnumerable<MultimodalShippingSystem.Models.ShipmentViewModel>
+
+@{
+    ViewData["Title"] = "Shipments";
+}
+
+<h1>Shipments</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Shipment</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>@Html.DisplayNameFor(model => model.SenderName)</th>
+            <th>@Html.DisplayNameFor(model => model.ReceiverName)</th>
+            <th>@Html.DisplayNameFor(model => model.Distance)</th>
+            <th>@Html.DisplayNameFor(model => model.Weight)</th>
+            <th>Calculated Fee</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    var (rowClass, icon) = item.ShipmentType switch
+    {
+        MultimodalShippingSystem.Models.ShipmentType.Road => ("table-success", "🚚"),
+        MultimodalShippingSystem.Models.ShipmentType.Air => ("table-primary", "✈️"),
+        _ => (string.Empty, "📦")
+    };
+
+    <tr class="@rowClass">
+        <td>@icon @item.ShipmentType</td>
+        <td>@item.SenderName</td>
+        <td>@item.ReceiverName</td>
+        <td>@(item.Distance?.ToString("0.##") ?? "N/A")</td>
+        <td>@(item.Weight?.ToString("0.##") ?? "N/A")</td>
+        <td>$@item.CalculatedFee.ToString("0.00")</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.ShipmentId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ShipmentId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.ShipmentId">Delete</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
