@@ -24,6 +24,7 @@ public sealed class ShippingDbContext : DbContext
         }
     }
 
+    // Used by EF Core design-time tooling when host-based DI/configuration is unavailable.
     internal static string ResolveDesignTimeConnectionString() =>
         Environment.GetEnvironmentVariable("SHIPPING_DATABASE_CONNECTION") ?? DesignTimeConnectionString;
 
