@@ -18,7 +18,7 @@ builder.Services.AddDbContext<ShippingDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("ShippingDatabase");
     if (string.IsNullOrWhiteSpace(connectionString))
     {
-        connectionString = "Server=(localdb)\\mssqllocaldb;Database=MultimodalShippingSystemDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+        connectionString = "Server=(localdb)\\mssqllocaldb;Database=MultimodalShippingSystemDb;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=True";
     }
 
     options.UseSqlServer(connectionString);
