@@ -5,7 +5,7 @@ namespace MultimodalShippingSystem.Data;
 
 public sealed class ShippingDbContext : DbContext
 {
-    private const string DesignTimeConnectionString =
+    internal const string DesignTimeConnectionString =
         "Server=(localdb)\\mssqllocaldb;Database=MultimodalShippingSystemDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
 
     public ShippingDbContext(DbContextOptions<ShippingDbContext> options) : base(options)
