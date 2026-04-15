@@ -15,7 +15,13 @@ builder.Services.AddDbContext<ShippingDbContext>(options =>
         return;
     }
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDatabase"));
+    var connectionString = builder.Configuration.GetConnectionString("ShippingDatabase");
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        connectionString = "Server=(localdb)\\mssqllocaldb;Database=MultimodalShippingSystemDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+    }
+
+    options.UseSqlServer(connectionString);
 });
 
 builder.Services.AddScoped<RoadShippingStrategy>();
