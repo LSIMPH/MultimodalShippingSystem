@@ -3,11 +3,26 @@ using MultimodalShippingSystem.Models;
 
 namespace MultimodalShippingSystem.Data;
 
-public sealed class ShippingDbContext(DbContextOptions<ShippingDbContext> options) : DbContext(options)
+public sealed class ShippingDbContext : DbContext
 {
+    private const string DesignTimeConnectionString =
+        "Server=(localdb)\\mssqllocaldb;Database=MultimodalShippingSystemDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+
+    public ShippingDbContext(DbContextOptions<ShippingDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<Shipment> Shipments => Set<Shipment>();
     public DbSet<RoadShipment> RoadShipments => Set<RoadShipment>();
     public DbSet<AirShipment> AirShipments => Set<AirShipment>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(DesignTimeConnectionString);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -8,15 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ShippingDbContext>(options =>
-{
-    if (builder.Environment.IsDevelopment())
-    {
-        options.UseInMemoryDatabase("ShippingDb");
-        return;
-    }
-
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDatabase"));
-});
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDatabase")));
 
 builder.Services.AddScoped<RoadShippingStrategy>();
 builder.Services.AddScoped<AirShippingStrategy>();
