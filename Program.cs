@@ -4,11 +4,13 @@ using MultimodalShippingSystem.Services;
 using MultimodalShippingSystem.Strategies;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ShippingDatabase")
+    ?? throw new InvalidOperationException("Connection string 'ShippingDatabase' was not found.");
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ShippingDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDatabase")));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<RoadShippingStrategy>();
 builder.Services.AddScoped<AirShippingStrategy>();

@@ -8,7 +8,7 @@ public class ShippingDbContextFactory : IDesignTimeDbContextFactory<ShippingDbCo
     public ShippingDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ShippingDbContext>();
-        optionsBuilder.UseSqlServer(ShippingDbContext.DesignTimeConnectionString);
+        optionsBuilder.UseSqlServer(ShippingDbContext.ResolveDesignTimeConnectionString());
 
         return new ShippingDbContext(optionsBuilder.Options);
     }

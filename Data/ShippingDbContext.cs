@@ -20,9 +20,12 @@ public sealed class ShippingDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(DesignTimeConnectionString);
+            optionsBuilder.UseSqlServer(ResolveDesignTimeConnectionString());
         }
     }
+
+    internal static string ResolveDesignTimeConnectionString() =>
+        Environment.GetEnvironmentVariable("SHIPPING_DATABASE_CONNECTION") ?? DesignTimeConnectionString;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
