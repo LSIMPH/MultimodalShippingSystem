@@ -20,8 +20,6 @@ builder.Services.AddDbContext<ShippingDbContext>(options =>
 
 builder.Services.AddScoped<RoadShippingStrategy>();
 builder.Services.AddScoped<AirShippingStrategy>();
-builder.Services.AddScoped<IShippingStrategy, RoadShippingStrategy>();
-builder.Services.AddScoped<IShippingStrategy, AirShippingStrategy>();
 builder.Services.AddScoped<IShippingRepository, ShippingRepository>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
 
