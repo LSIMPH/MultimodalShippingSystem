@@ -61,11 +61,11 @@ public sealed class ShippingService(
         { ShipmentType: ShipmentType.Road, SenderName: not null, ReceiverName: not null, Distance: > 0, Weight: > 0 } vm =>
             new RoadShipment(vm.SenderName, vm.ReceiverName, vm.Distance.Value, vm.Weight.Value),
 
-        { ShipmentType: ShipmentType.Air, SenderName: not null, ReceiverName: not null, Weight: > 0 } vm =>
-            new AirShipment(vm.SenderName, vm.ReceiverName, vm.Weight.Value, vm.IsPriority),
+        { ShipmentType: ShipmentType.Air, SenderName: not null, ReceiverName: not null, Distance: > 0, Weight: > 0 } vm =>
+            new AirShipment(vm.SenderName, vm.ReceiverName, vm.Distance.Value, vm.Weight.Value, vm.IsPriority),
 
         { ShipmentType: ShipmentType.Road } => throw new ArgumentOutOfRangeException(nameof(shipmentViewModel), "Road shipment requires positive distance and weight."),
-        { ShipmentType: ShipmentType.Air } => throw new ArgumentOutOfRangeException(nameof(shipmentViewModel), "Air shipment requires positive weight."),
+        { ShipmentType: ShipmentType.Air } => throw new ArgumentOutOfRangeException(nameof(shipmentViewModel), "Air shipment requires positive distance and weight."),
         _ => throw new NotSupportedException("Unsupported shipment type.")
     };
 
@@ -92,7 +92,7 @@ public sealed class ShippingService(
                 SenderName = airShipment.SenderName,
                 ReceiverName = airShipment.ReceiverName,
                 ShipmentType = ShipmentType.Air,
-                Distance = null,
+                Distance = airShipment.Distance,
                 Weight = airShipment.Weight,
                 IsPriority = airShipment.IsPriority,
                 CalculatedFee = calculatedFee

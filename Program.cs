@@ -9,12 +9,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ShippingDbContext>(options =>
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        options.UseInMemoryDatabase("ShippingDb");
-        return;
-    }
-
     options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDatabase"));
 });
 
@@ -28,7 +22,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ShippingDbContext>();
-    dbContext.Database.EnsureCreated();
+    dbContext.Database.Migrate();
 }
 
 if (!app.Environment.IsDevelopment())
