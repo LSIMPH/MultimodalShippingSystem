@@ -43,9 +43,17 @@ public sealed class ShipmentViewModel : IValidatableObject
             }
         }
 
-        if (ShipmentType == ShipmentType.Air && (Weight is null or <= 0))
+        if (ShipmentType == ShipmentType.Air)
         {
-            yield return new ValidationResult("Weight must be greater than 0 for air shipments.", [nameof(Weight)]);
+            if (Distance is null or <= 0)
+            {
+                yield return new ValidationResult("Distance must be greater than 0 for air shipments.", [nameof(Distance)]);
+            }
+
+            if (Weight is null or <= 0)
+            {
+                yield return new ValidationResult("Weight must be greater than 0 for air shipments.", [nameof(Weight)]);
+            }
         }
 
         if (string.IsNullOrWhiteSpace(SenderName))
